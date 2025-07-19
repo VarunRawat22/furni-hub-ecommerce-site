@@ -1,17 +1,33 @@
 import { mockProducts } from "@/data/mockData";
 import { ProductCard } from "@/components/product/ProductCard";
-import { Product } from "@/types/product";
+import { Product, CartItem } from "@/types/product";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Filter, SortAsc } from "lucide-react";
 
-export const ProductGrid = () => {
+interface ProductGridProps {
+  cart: CartItem[];
+  setCart: React.Dispatch<React.SetStateAction<CartItem[]>>;
+}
+
+export const ProductGrid = ({ cart, setCart }: ProductGridProps) => {
   const [products] = useState(mockProducts);
   const { toast } = useToast();
 
   const handleAddToCart = (product: Product) => {
-    // In a real app, this would integrate with cart context/state
+    setCart(prevCart => {
+      const existing = prevCart.find(item => item.product.id === product.id);
+      if (existing) {
+        return prevCart.map(item =>
+          item.product.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      } else {
+        return [...prevCart, { product, quantity: 1 }];
+      }
+    });
     toast({
       title: "Added to cart!",
       description: `${product.name} has been added to your cart.`,
@@ -52,6 +68,8 @@ export const ProductGrid = () => {
               key={product.id}
               product={product}
               onAddToCart={handleAddToCart}
+              cart={cart}
+              setCart={setCart}
             />
           ))}
         </div>

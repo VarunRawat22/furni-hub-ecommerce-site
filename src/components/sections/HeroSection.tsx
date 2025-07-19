@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Star } from "lucide-react";
 import heroBanner from "@/assets/hero-banner.jpg";
+import { Link } from "react-router-dom";
 
 export const HeroSection = () => {
   return (
@@ -27,13 +28,17 @@ export const HeroSection = () => {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button variant="hero" size="xl" className="group">
-                Shop Now
-                <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
-              </Button>
-              <Button variant="outline" size="xl">
-                View Catalog
-              </Button>
+              <Link to="/categories">
+                <Button variant="hero" size="xl" className="group">
+                  Shop Now
+                  <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </Link>
+              <Link to="/catalog">
+                <Button variant="outline" size="xl">
+                  View Catalog
+                </Button>
+              </Link>
             </div>
 
             {/* Stats */}

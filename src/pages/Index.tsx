@@ -4,15 +4,22 @@ import { CategoryGrid } from "@/components/sections/CategoryGrid";
 import { ProductGrid } from "@/components/sections/ProductGrid";
 import { FeaturesSection } from "@/components/sections/FeaturesSection";
 import { Footer } from "@/components/layout/Footer";
+import { useState } from "react";
+import { Product, CartItem } from "@/types/product";
 
-const Index = () => {
+interface IndexProps {
+  cart: CartItem[];
+  setCart: React.Dispatch<React.SetStateAction<CartItem[]>>;
+}
+
+const Index = ({ cart, setCart }: IndexProps) => {
   return (
     <div className="min-h-screen bg-background">
-      <Header />
+      <Header cart={cart} />
       <main>
         <HeroSection />
         <CategoryGrid />
-        <ProductGrid />
+        <ProductGrid setCart={setCart} cart={cart} />
         <FeaturesSection />
       </main>
       <Footer />

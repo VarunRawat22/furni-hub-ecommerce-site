@@ -1,24 +1,23 @@
+import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
 import { mockCategories } from "@/data/mockData";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { CartItem } from "@/types/product";
 
-export const CategoryGrid = () => {
+interface CategoriesProps {
+  cart: CartItem[];
+}
+
+const Categories = ({ cart }: CategoriesProps) => {
   return (
-    <section className="py-16 bg-background">
-      <div className="container mx-auto px-4">
-        {/* Section Header */}
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Shop by Category
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Discover our curated collections designed to transform every room in your home
-          </p>
-        </div>
-
-        {/* Categories Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+    <div className="min-h-screen bg-background">
+      <Header cart={cart} />
+      <main className="container mx-auto py-12 px-4">
+        <h1 className="text-3xl md:text-4xl font-bold mb-8">All Categories</h1>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {mockCategories.map((category) => (
             <div
               key={category.id}
@@ -47,7 +46,6 @@ export const CategoryGrid = () => {
                       <Button
                         variant="secondary"
                         size="sm"
-                        className="opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                       >
                         Browse
                         <ArrowRight className="h-4 w-4" />
@@ -59,17 +57,10 @@ export const CategoryGrid = () => {
             </div>
           ))}
         </div>
-
-        {/* View All Button */}
-        <div className="text-center">
-          <Link to="/categories">
-            <Button variant="outline" size="lg">
-              View All Categories
-              <ArrowRight className="h-4 w-4" />
-            </Button>
-          </Link>
-        </div>
-      </div>
-    </section>
+      </main>
+      <Footer />
+    </div>
   );
 };
+
+export default Categories;
